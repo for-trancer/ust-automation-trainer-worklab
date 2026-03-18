@@ -1,0 +1,52 @@
+# SCRUM MODEL
+
+Requirements -> User Stories -> RPM(product owner)  -> PB -> SPM(scrum master) -> SB(development team) -> Start Sprint -> DSC(beginning of the day:avg 15 minutes) (IB) -> Sprint Done -> SR
+-> SRF
+
+- User Story
+
+As a "role",I want to "perform a task",so that "achievement"
+
+eg. As a "user",i want to  "login on ust page",so that "I can access all of its tools"
+
+- Roles
+
+1.Product Owner
+2.Scrum Master
+3.Development Team
+
+- Meetings
+
+1.Release Planning Meetings (RPM)
+2.Scrum Planning Meeting (SPM)
+3.Daily stand up call (DSC)
+4.Sprint review (SR) (Whats done whats not done)
+5.Sprint Retrospective (SRF) (Understanding team flow(adding or reducing story points))
+
+- Backlogs
+
+1.Product Backlog (PB)
+2.Sprint Backlog (SB)
+3.Impediment Backlog (IB : Challenges , Owned By Scrum Master)
+
+- Estimation 
+
+1.Planning Points(points = hours)
+2.Story Points
+
+- Daily Standup Meetings
+
+1.Task you did yesterday?
+2.Task you are going to do today?
+3.Any challenges?
+
+- Tools(Project Management)
+
+1.Jira
+2.Rally
+3.Monday
+
+
+
+
+

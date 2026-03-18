@@ -1,0 +1,127 @@
+# MANUAL TESTING (Predefined Test Cases)
+
+- Types (Functional and Non Functional)
+
+* Functional Testing
+
+1.Acceptance Testing : Confirms the product meet buiseness requirements (performed by end users / clients)
+2.Integration Testing : Ensure multiple module works together
+3.Unit Testing : Individual Components
+4.Functional Testing : Tests the entire system
+5.Retesting : 
+6.Regression Testing : 
+7.Smoke Testing : Running tests on most critical functions(eg.after the bug fix/built release)
+8.Sanity Testing : Tested on stable builds and ensures that the built is working
+
+* Non Functional Testing
+
+1.Performance Testing : Checks speed,responsiveness and stability
+2.Stress Testing : Tests how the system behaves under high load
+3.Usability Testing : Ensures the app is easy to use and user-friendly
+
+- Testing Approaches
+
+* Black Box : No Source Code Visible 
+
+	a.Equiliance Partition : Dividing input data into valid and invalid partitions (password length)
+	(0-7 : invalid , 8-12 : valid , 13+ : invalid)
+
+	b.Boundary Value Analysis : In scope and out of scope
+
+	c.State Transition Testing : Checking how the system changes from one state to another(ATM: Enter pin to account menu or access denied after 3 failed attempts)
+
+	d.Decision Table Technique : Visual representation of specific action
+
+* White Box : Visible Source Code
+
+	a.Statement Coverage : Every executable line of code is atleast covered once in testing (if else)
+
+	b.Branch Coverage : Every possible outcome is from each decision point is executed
+
+	c.Path Coverage : Ensures every execution path is tested
+	 
+
+* Gray Box : Combination of Black And White
+
+- Models
+
+* V Model
+
+	     VALIDATION                          TESTING
+          (Requirements)                      (Verification)
+
+    Requirements Analysis  ---------------->  Acceptance Testing
+             \                                      /
+              \                                    /
+           System Design  ---------------->  Functional Testing
+                 \                              /
+                  \                            /
+               Architecture Design  -->  Integration Testing
+                     \                      /
+                      \                    /
+                    Module Design  -->  Unit Testing
+                          \              /
+                           \            /
+                           --> Coding <--
+
+- STLC (Software Testing LifeCycle)
+
++-----------------------+
+
+|  Requirement Analysis |
++-----------+-----------+
+            |
+            V
++-----------+-----------+
+|     Test Planning     |
++-----------+-----------+
+            |
+            V
++-----------+-----------+
+| Test Case Development |
++-----------+-----------+
+            |
+            V
++-----------+-----------+
+| Test Environment Setup|
++-----------+-----------+
+            |
+            V
++-----------+-----------+
+|     Test Execution    |
++-----------+-----------+
+            |
+            V
++-----------+-----------+
+|      Test Closure     |
++-----------------------+
+
+1.Error : Error found by tester (Developer)
+2.Bug : Defect accepted by development team (Tester) 
+3.Failure : Build doesnot meet any requirements (Customer)
+
+- Defect Life Cycle
+
+new -> open -> assigned -> fixed -> verified -> closed
+
+* Defect Severity : 
+
+	1.Critical : 
+	2.Minor : 
+	3.Major :
+	4.Low : 
+
+* Defect Priority :
+ 
+	1.High
+	2.Medium
+	3.Low
+
+
+
+
+
+
+
+
+
