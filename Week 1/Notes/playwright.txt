@@ -1,0 +1,111 @@
+# Playwright
+
+* Features 
+
+	1.open-source
+	2.end-to-end or cross-browser testing
+	3.reduce flaky test
+
+* Locators (Uniquely identify web elements)
+
+	1. page.getByRole() : explicit and implicit accessibility attributes
+
+		eg. <button>Login</button>
+			pw : await page.getByRole('button',{name:'Login'}).click();
+	
+	2. page.getByText() : locate by text content
+		
+		eg.<span>Ust Global</span>
+			pw : await page.getByText('Ust Global')).toBeVisible();
+
+	3. page.getByLabel() : locate by label
+
+		eg.<label>Username : </label>
+			pw : await page.getByLabel('Username').fill("admin_user");
+
+	4. page.getByPlaceholder() : locate by place holder
+
+		eg.<input type="text" placeholder="username"/>
+			pw : await page.getByPlaceholder('username').fill('customer_user');
+
+	5. page.getByAltText() : locate by alt text
+
+		eg.<img src="1.jpg" alt="ust-logo">
+			pw : await page.getByAltText('ust-logo').click()
+
+	6. page.getByTitle() : locate by title
+
+		eg.<span title="heading-text"></span>
+			pw : await page.getByTitle('heading-text').toBeVisible();
+
+	7. page.getByTestId() : locate by id
+
+		eg.<button id="submit">Register</button>
+			pw : await page.getByTestId('submit').click();	
+	8. page.locator() : locate by id,class,attributes etc.
+		
+		eg.<input type="text" id="user-name">
+			pw : await page.locator('user-name').fill('#locked_out_user');	
+			   : await page.locator(input[data-test='password']).fill('secret_sauce');
+			   : await page.locator(.submit-button").click();
+* Browser 
+
+	1. Chromium : npx playwright test filename.spec.ts --project chromium
+
+* CLI 
+
+	1.npx playwright test --headed : headed browser
+	2.npx playwright test filename : specific file
+	3.npx playwright test --ui : ui
+	4.npx playwright test --workers 1 : disable parallel execution
+	5.npx playwright test filename --debug : playwright inspector(debugging)
+	6.npx playwright test : default run all
+	7.npx playwright codegen : record steps , automate (works without framework)
+
+* Asynchronous Nature and Promise Handling in Playwright
+
+	1.Asynchronous Nature : Non blocking execution model where tasks can run in background
+
+	2.Promise Handling : Process of defining what should happen after async execution "completes" or "fails"
+
+# Assertions
+
+	1. Hard Assertions : one fails rest will not be executed
+
+		eg. await expect().hard().toBe();
+
+	2. Soft Assertions : failure doesn't affect execution
+
+		eg. await expect().soft().toBe();
+	
+	3. Custom Error Message : 
+		
+		a.expect(locator).configure
+		b.expect(locator).poll
+		c.expect(locator).toPass
+		
+
+* Auto-Retrying Assertions 
+ 
+	1. expect(locator).toBeAttached();
+	2. expect(locator).toBeChecked();
+	3. expect(locator).toBeDisabled();
+	4. expect(locator).toBeEditable();
+	5. expect(locator).toBeEnabled();
+	6. expect(locator).toBeEmpty();
+	7. expect(locator).toBeFocused();
+
+* Non-retrying Assertions
+	
+	1. expect(locator).toBe();
+	2. expect(locator).toBeClosed();
+	3. expect(locator).toBeDefined();
+	4. expect(locator).toBeFalsy();
+	5. expect(locator).toBeGreaterThan();
+	6. expect(locator).toBeGreaterThanOrEqualTo();
+	7. expect(locator).toBeInstanceOf();
+
+
+
+	
+
