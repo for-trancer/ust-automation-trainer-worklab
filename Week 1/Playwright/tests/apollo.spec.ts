@@ -1,16 +1,10 @@
 import {test,expect} from "@playwright/test";
 
-test("To evaluate the credit card form functionality with valid credentials",async ({page}) => {
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-overview");
+test.use({storageState:'auth.json'});
 
-    await page.locator('a').filter({ hasText: 'Apply Now' }).first().click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).fill('9778063324');
-    await page.getByRole('checkbox').uncheck();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.waitForTimeout(12000);
-    await page.getByRole('button', { name: 'Verify' }).click();
-    await page.locator('a').filter({ hasText: 'Resume Application' }).first().click();
+// test case 1
+test("To evaluate the credit card form functionality with valid credentials",async ({page}) => {
+    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
 
     await page.locator('input[title="PAN"]').fill("EPKPA7238P");
     await page.waitForTimeout(1000);
@@ -29,17 +23,9 @@ test("To evaluate the credit card form functionality with valid credentials",asy
     await expect(sucessMessage).toBe("Step 2 of 4");
 });
 
+// test case 2
 test("To evaluate the credit card form functionality with invalid credentials",async ({page})=>{
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-overview");
-
-    await page.locator('a').filter({ hasText: 'Apply Now' }).first().click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).fill('9778063324');
-    await page.getByRole('checkbox').uncheck();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.waitForTimeout(12000);
-    await page.getByRole('button', { name: 'Verify' }).click();
-    await page.locator('a').filter({ hasText: 'Resume Application' }).first().click();
+    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
 
     await page.locator('input[title="PAN"]').fill("NOPANFORYO");
     await page.waitForTimeout(1000);
@@ -48,17 +34,9 @@ test("To evaluate the credit card form functionality with invalid credentials",a
     await expect(errorMessage).toBe("PAN not valid, please enter a valid PAN");
 });
 
+// test case 3
 test("To evaluate the credit card form functionality with blank personal email",async ({page}) => {
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-overview");
-
-    await page.locator('a').filter({ hasText: 'Apply Now' }).first().click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).fill('9778063324');
-    await page.getByRole('checkbox').uncheck();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.waitForTimeout(12000);
-    await page.getByRole('button', { name: 'Verify' }).click();
-    await page.locator('a').filter({ hasText: 'Resume Application' }).first().click();
+    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
 
     await page.locator('input[title="PAN"]').fill("EPKPA7238P");
     await page.waitForTimeout(1000);
@@ -75,17 +53,9 @@ test("To evaluate the credit card form functionality with blank personal email",
     await expect(errorMessage).toBe("Please enter a valid email ID");
 });
 
+// test case 4
 test("To evaluate the credit card form functionality with blank address",async ({page}) => {
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-overview");
-
-    await page.locator('a').filter({ hasText: 'Apply Now' }).first().click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).fill('9778063324');
-    await page.getByRole('checkbox').uncheck();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.waitForTimeout(12000);
-    await page.getByRole('button', { name: 'Verify' }).click();
-    await page.locator('a').filter({ hasText: 'Resume Application' }).first().click();
+    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
 
     await page.locator('input[title="PAN"]').fill("EPKPA7238P");
     await page.waitForTimeout(1000);
@@ -101,17 +71,9 @@ test("To evaluate the credit card form functionality with blank address",async (
     await expect(button).toBeDisabled;
 });
 
+// test case 5
 test("To evaluate the credit card form functionality with blank mother's name",async ({page}) => {
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-overview");
-
-    await page.locator('a').filter({ hasText: 'Apply Now' }).first().click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).click();
-    await page.getByRole('textbox', { name: 'Please enter mobile number' }).fill('9778063324');
-    await page.getByRole('checkbox').uncheck();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.waitForTimeout(12000);
-    await page.getByRole('button', { name: 'Verify' }).click();
-    await page.locator('a').filter({ hasText: 'Resume Application' }).first().click();
+    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
 
     await page.locator('input[title="PAN"]').fill("EPKPA7238P");
     await page.waitForTimeout(1000);
@@ -125,4 +87,28 @@ test("To evaluate the credit card form functionality with blank mother's name",a
 
     let errorMessage = await page.locator('span[class="eb"]').textContent();
     await expect(errorMessage).toBe("Please enter a valid mother's name (minimum 3 characters)");
+});
+
+// test case 6
+test("to validate the user is able to type in the pan card text field",async ({page})=>{
+    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
+
+    const panPlaceHolder = await page.locator('input[title="PAN"]');
+
+    await expect(panPlaceHolder).toBeVisible();
+    await expect(panPlaceHolder).toBeEnabled();
+    
+    await panPlaceHolder.fill("EPKPA1234");
+    await expect(panPlaceHolder).toHaveValue("EPKPA1234");
+});
+
+// test case 7
+test.only("to validate the dob field is visible",async ({page})=>{
+    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
+    await page.locator('input[title="PAN"]').fill("EPKPA7238P");
+
+    const dobHolder = await page.getByPlaceholder('DD-MM-YYYY');
+
+    await expect(dobHolder).toBeVisible();
+    await expect(dobHolder).toHaveValue("15/08/2003");
 });
