@@ -1,27 +1,37 @@
-import {test,expect} from "@playwright/test";
+import {test,expect,Page,BrowserContext} from "@playwright/test";
+import {CreditCardPOM} from "../pages/credit-card-form";
+import {fetchCreditData} from "../utils/excelDataReader";
 
 test.use({storageState:'auth.json'});
 
-// test case 1
-test("To evaluate the credit card form functionality with valid credentials",async ({page}) => {
+let page : Page;
+let pageData :CreditCardPOM;
+
+interface CreditDataCredentials{
+    pan : string,
+    gender : string,
+    nationality : string,
+    mother_name : string,
+    email : string,
+    pincode : string,
+    message : string,
+}
+
+const creditCredentials : CreditDataCredentials[] = fetchCreditData("credit_data.xlsx","Sheet1"); 
+
+test.beforeEach(async ({page})=>{
     await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
-
-    await page.locator('input[title="PAN"]').fill("EPKPA7238P");
-    await page.waitForTimeout(1000);
-    await page.getByRole('button',{name : "Male"}).click();
-
-    await page.getByRole('radio').first().check();
-
-    await page.locator('input[placeholder="Mother\'s First Name *"]').fill("Mama");
-    await page.locator('input[placeholder="Enter Personal Email"]').fill("personal@gmail.com");
-    await page.locator('input[placeholder="Enter Current Residential Address Pincode"]').fill("685552");
-
-    await page.getByText('Next').click();
-
-    let sucessMessage = await page.getByText("Step 2 of 4").textContent();
-
-    await expect(sucessMessage).toBe("Step 2 of 4");
+    pageData = new CreditCardPOM(page);
 });
+
+// test case 1
+[creditCredentials].forEach(data=>[
+        test.only("To evaluate the credit card form functionality with valid credentials",async ({page}) => {
+        await pageData.SignInWithCredentials(page,"EPKPA7238P","Male","Indian","Mama","robot@automation.com","685552","Step 2 of 4");
+}),
+])
+
+
 
 // test case 2
 test("To evaluate the credit card form functionality with invalid credentials",async ({page})=>{
@@ -103,7 +113,7 @@ test("to validate the user is able to type in the pan card text field",async ({p
 });
 
 // test case 7
-test.only("to validate the dob field is visible",async ({page})=>{
+test("to validate the dob field is visible",async ({page})=>{
     await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
     await page.locator('input[title="PAN"]').fill("EPKPA7238P");
 
