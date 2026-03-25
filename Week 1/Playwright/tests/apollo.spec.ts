@@ -25,11 +25,14 @@ test.beforeEach(async ({page})=>{
 });
 
 // test case 1
-[creditCredentials].forEach(data=>[
-        test.only("To evaluate the credit card form functionality with valid credentials",async ({page}) => {
-        await pageData.SignInWithCredentials(page,"EPKPA7238P","Male","Indian","Mama","robot@automation.com","685552","Step 2 of 4");
-}),
-])
+
+creditCredentials.forEach((data : CreditDataCredentials)=>{
+    test.only("To evaluate the credit card form functionality with valid credentials",async ({page}) => {
+    await pageData.SignInWithCredentials(page,data.pan,data.gender,data.nationality,data.mother_name,data.email,String(data.pincode),data.message);
+    await page.waitForTimeout(5000);
+})
+});
+
 
 
 
