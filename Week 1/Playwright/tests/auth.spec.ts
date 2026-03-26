@@ -1,5 +1,5 @@
-import {test} from "@playwright/test"
-import * as readline from "readline"
+import {test,expect} from "@playwright/test";
+import * as readline from "readline";
 
 test("Setup: save login session via manual otp",async ({browser})=>{
     const context = await browser.newContext();

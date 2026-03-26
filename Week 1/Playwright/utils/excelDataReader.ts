@@ -12,7 +12,7 @@ export const fetchCreditData = (fileName : string,sheetName : string) : any =>{
         return data;
     }
     catch(e){
-        console.error("Error reading the excel file : ",e);
-        throw new Error("Error reading the excel file from the location");
+        console.error(e);
+        throw new Error("Error reading the excel file");
     }
 }

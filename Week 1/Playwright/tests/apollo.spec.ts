@@ -13,8 +13,9 @@ interface CreditDataCredentials{
     nationality : string,
     mother_name : string,
     email : string,
-    pincode : string,
+    pincode : number,
     message : string,
+    scenario : string,
 }
 
 const creditCredentials : CreditDataCredentials[] = fetchCreditData("credit_data.xlsx","Sheet1");
@@ -24,82 +25,45 @@ test.beforeEach(async ({page})=>{
     pageData = new CreditCardPOM(page);
 });
 
-// test case 1
+creditCredentials.forEach((data : CreditDataCredentials,index : number)=>{
 
-creditCredentials.forEach((data : CreditDataCredentials)=>{
-    test.only("To evaluate the credit card form functionality with valid credentials",async ({page}) => {
-    await pageData.SignInWithCredentials(page,data.pan,data.gender,data.nationality,data.mother_name,data.email,String(data.pincode),data.message);
-    await page.waitForTimeout(5000);
-})
-});
+    // test case 1
+    if(data.scenario == 'valid'){
+        test(`To evaluate the credit card form functionality with valid credentials ${index}`,async ({page}) => {
+            await pageData.SignInWithCredentials(page,data.pan,data.gender,data.nationality,data.mother_name,data.email,data.pincode,data.message);
+        });
+    }
+
+    // test case 2
+    if(data.scenario == 'invalid'){
+        test(`To evaluate the credit card form functionality with invalid credentials ${index}`,async ({page})=>{
+            await pageData.SignInWithCredentials(page,data.pan,data.gender,data.nationality,data.mother_name,data.email,data.pincode,data.message);
+        });
+    }
+
+    // test case 3
+    if(data.scenario == "username")
+    {
+        test(`To evaluate the credit card form functionality with blank personal email ${index}`,async ({page}) => { 
+            await pageData.SignInWithCredentials(page,data.pan,data.gender,data.nationality,data.mother_name,data.email,data.pincode,data.message);
+        });
+    }
+
+    // test case 4
+    if(data.scenario == "pincode"){
+        test(`To evaluate the credit card form functionality with blank address ${index}`,async ({page}) => {
+            await pageData.SignInWithCredentials(page,data.pan,data.gender,data.nationality,data.mother_name,data.email,data.pincode,data.message);
+        });
+    }
+
+    // test case 5
+    if(data.scenario == "mother_name"){
+        test(`To evaluate the credit card form functionality with blank mother's name ${index}`,async ({page}) => {
+            await pageData.SignInWithCredentials(page,data.pan,data.gender,data.nationality,data.mother_name,data.email,data.pincode,data.message);
+        });
+    }
 
 
-
-
-// test case 2
-test("To evaluate the credit card form functionality with invalid credentials",async ({page})=>{
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
-
-    await page.locator('input[title="PAN"]').fill("NOPANFORYO");
-    await page.waitForTimeout(1000);
-
-    let errorMessage = await page.locator('span[class="eb"]').textContent();
-    await expect(errorMessage).toBe("PAN not valid, please enter a valid PAN");
-});
-
-// test case 3
-test("To evaluate the credit card form functionality with blank personal email",async ({page}) => {
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
-
-    await page.locator('input[title="PAN"]').fill("EPKPA7238P");
-    await page.waitForTimeout(1000);
-    await page.getByRole('button',{name : "Male"}).click();
-
-    await page.getByRole('radio').first().check();
-
-    await page.locator('input[placeholder="Mother\'s First Name *"]').fill("Mama");
-    await page.locator('input[placeholder="Enter Personal Email"]').fill("");
-    await page.locator('input[placeholder="Enter Current Residential Address Pincode"]').fill("685552");
-
-
-    let errorMessage = await page.locator('span[class="eb"]').textContent();
-    await expect(errorMessage).toBe("Please enter a valid email ID");
-});
-
-// test case 4
-test("To evaluate the credit card form functionality with blank address",async ({page}) => {
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
-
-    await page.locator('input[title="PAN"]').fill("EPKPA7238P");
-    await page.waitForTimeout(1000);
-    await page.getByRole('button',{name : "Male"}).click();
-
-    await page.getByRole('radio').first().check();
-
-    await page.locator('input[placeholder="Mother\'s First Name *"]').fill("Mama");
-    await page.locator('input[placeholder="Enter Personal Email"]').fill("personal@gmail.com");
-    await page.locator('input[placeholder="Enter Current Residential Address Pincode"]').fill("");
-
-    const button = await page.getByLabel('Next');
-    await expect(button).toBeDisabled;
-});
-
-// test case 5
-test("To evaluate the credit card form functionality with blank mother's name",async ({page}) => {
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
-
-    await page.locator('input[title="PAN"]').fill("EPKPA7238P");
-    await page.waitForTimeout(1000);
-    await page.getByRole('button',{name : "Male"}).click();
-
-    await page.getByRole('radio').first().check();
-
-    await page.locator('input[placeholder="Mother\'s First Name *"]').fill("");
-    await page.locator('input[placeholder="Enter Personal Email"]').fill("personal@gmail.com");
-    await page.locator('input[placeholder="Enter Current Residential Address Pincode"]').fill("685552");
-
-    let errorMessage = await page.locator('span[class="eb"]').textContent();
-    await expect(errorMessage).toBe("Please enter a valid mother's name (minimum 3 characters)");
 });
 
 // test case 6
