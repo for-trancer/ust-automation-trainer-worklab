@@ -1,0 +1,225 @@
+# XPath
+
+* Absolute XPath : Provide complete hierarchical path from root to element
+
+	1. /html/body/section/div/div/div/form/div/div/textarea
+	2. /html/body/section/div/div/div[2]/form/div[2]/div/textarea
+
+* Relative XPath : Starts from specific position and searches for element anywhere in the program
+
+	3. //textarea[@ng-model='Adress']
+	4. //*[@id='basicBootstrapForm']/div[2]/div/textarea
+	5. //a[@aria-label='Gmail ']
+
+* XPath Methods
+	
+	1. Text Method : //div[text()='Google offered in:  ']
+	2. Contains Method : //div[contains(@jsname,'gLFyf')]
+	3. Starts With : //input[starts-with(@aria-label,"Google Search")]
+	4. Ends With : //div[ends-with(@class,"b"]
+	5. Multiple Method : //div[contains(text(),'Google offered in')]
+
+* XPath Axis
+
+	1. Ancestor : 
+
+		eg. //span[contains(text(),'AI Mode')]/ancestor::div
+
+	2. Parent : 
+
+		eg. //span[contains(text(),'AI Mode')]/parent::div
+
+	3. Child : 
+
+		eg. //div[@class='SDkEP']/child::div
+
+	4. Sibling : 
+
+		eg. //div[@class='WC2Die']/following-sibling::button
+
+	5. Descendent : 
+	6. Following : 
+
+		eg. //div[@class='WC2Die']/following-sibling::button
+
+	7. Preceding :
+ 
+		eg. //div[@class='fM33ce dRYYxd']/preceding-sibling::div
+
+	8. Following Preceding : 
+	9. Following Descending :
+
+# EVENTS
+
+* Mouse Events
+
+	1. click() : single left click
+
+		eg. await page.locator().click();
+
+	2. dblclick() : double click
+	3. click({button:'right'}) : right click 
+	4. click({modifiers : ['Shift']}) : shift 
+	5. hover() : hover over element
+
+		eg. await page.locator().hover();
+
+	6. click({position: {x:offset,y:offset}) : position
+	7. sourceLocator.dragTo(targetLocator) : dragging onto element
+
+		eg. angLogo.dragTo(destinationLocation);
+
+
+* Keyboard Events
+
+	1. fill() : fills content
+
+		eg.await page.getByPlaceHolder("user-name").fill("Robot");
+
+	2. pressSequentially(text, delay) : fills with delay
+
+		eg.await page.locator().pressSequentially("robot@exam.com",{delay:100});
+
+	3. press(key) : press an key
+	
+		eg. page.keyboard.press("Tab");
+
+	4. keyboard.type(text) : type simulation
+	5. keyboard.down(key) : presses a button
+	6. keyboard.up(key) :  releases a button
+
+# POM (Page Object Model)
+
+	1. Object design pattern or design framework
+	2. Improve maintainability and enhance reusability of the code
+	3. Seperates the page elements and their interaction
+
+# Annotations 
+	
+	1. skip() : skips an test eg. test.skip()
+	2. beforeEach() : execute before each test eg. test.beforeEach()
+	3. afterEach() : execute after each test eg. test.afterEach()
+	4. beforeAll() : executes before all the test eg. test.beforeAll()
+	5. afterAll() : executes after all  the test eg. test.afterAll()
+	6. fail() : explicitely fail an test case eg. test.fail()
+	7. fixme() : doesn't get executed eg. test.fixme()
+	8. slow() : increased timeout
+	9. only() : only that test case will be executed
+	10. describe() : group tests under same logical name
+		eg. test.describe('two test',()=>{test();test();});
+
+# Data Driven Testing 
+	
+	- npm install xlsx
+	- xlsx,readFile,xlsx_to_json
+	- workbook,SheetName,filename
+
+# Methodologies
+
+* TDD (Test Driven Development)
+	
+	1. Technical Correctness
+	2. Code Design
+	3. Low level language 
+	4. Used by developers
+	5. "Are we building it right"
+
+* ATDD (Acceptance Test Driven Development)
+
+	1. Stakeholders,Developers and Testers
+	2. System level requirememnts
+	3. plain English / Gherkin
+	4. Documentation
+	5. "Are we building the right thing"
+
+* BDD Testing (Behaviour Driven Development)
+
+	1. Uses human readable language called Gherkin
+	2. Used to write scenarios like Given-When-Then format
+	3. Requires documentation
+	4. "Is this the user really wants"
+
+* Cross-Functional Team (Technical and Non-Technical Members)
+	
+	1.brings together people from different department
+	2.engineering,marketing,finance and design
+
+# Gherkin
+
+	Simple English language to describe the BDD framework.
+
+	1. case sensitive
+
+* Keywords
+
+	1. Feature : providing feature or module name 
+
+		eg. Credit Card Functionality
+
+	2. Background : Combination of steps , which executes before each scenario
+
+	3. Scenario : Task you are going to perform (Scenario = Test Case)
+		
+		eg. Entering Credentials with  valid data,invalid or blank data
+
+	4. Scenario Outline : used to run scenario with multiple data
+
+	5. Given : Pre condition/pre requirements
+	6. When : Task you want to perform
+	7. Then : Outcomes
+	8. And : Continuation of given,when and then step
+	9. But : Negative step (eg. when user enters an invalid username)
+	10. Examples : It stores the data for execution in scenario outline
+
+* Example
+
+	Feature : Login Functionality
+
+	Scenario : Login with valid credentials
+	Given User is on login page
+	When user enters username
+	And user enters password
+	And user clicks login button
+	Then user is logged in successfully
+	And user is able to navigate to product page
+
+* Framework 
+	
+	1. Java : Cucumber
+	2. NET : Specsflow
+	3. Python : PyBehave/Behave
+	4. JS/TS : Cucumber.js
+
+* Integrate BDD with Playwright
+
+	- npm init playwright@latest
+	- npm install -D @playwright/test playwright-bdd
+
+	- playwright.config.ts -> 
+
+		import {defineBddConfig} from 'playwright-bdd'
+
+		defineBddConfig({
+ 			features: 'tests/features/**/*.feature',
+  			steps: 'tests/steps/**/*.ts',
+ 			outputDir: './tests'
+		});
+
+	- package.json ->
+		
+		"scripts": {
+    			"bdd-gen":"bddgen",
+    			"test":"playwright test",
+    			"bdd":"npx run bdd-gen && npx run test"
+  		},
+
+	- npm run bdd
+	- const {Given,When,Then} = createBdd(); -> steps file also copy contents from cmd to this file
+			
+	
+
+
+	
+
+
+

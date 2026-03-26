@@ -17,7 +17,7 @@ interface CreditDataCredentials{
     message : string,
 }
 
-const creditCredentials : CreditDataCredentials[] = fetchCreditData("credit_data.xlsx","Sheet1"); 
+const creditCredentials : CreditDataCredentials[] = fetchCreditData("credit_data.xlsx","Sheet1");
 
 test.beforeEach(async ({page})=>{
     await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
