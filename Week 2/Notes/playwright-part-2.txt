@@ -193,7 +193,7 @@
 * Integrate BDD with Playwright
 
 	- npm init playwright@latest
-	- npm install -D @playwright/test playwright-bdd
+	- npm install -D @playwright/latest playwright-bdd
 
 	- playwright.config.ts -> 
 
@@ -210,11 +210,22 @@
 		"scripts": {
     			"bdd-gen":"bddgen",
     			"test":"playwright test",
-    			"bdd":"npx run bdd-gen && npx run test"
+    			"bdd":"npm run bdd-gen && npm run test"
   		},
 
 	- npm run bdd
-	- const {Given,When,Then} = createBdd(); -> steps file also copy contents from cmd to this file
+	- copy the cmd output to steps file ->
+	- const {Given,When,Then} = createBdd(); -> 
+
+* Regular Expressions
+
+	Scenario Outline:
+	When user enters <username>
+	When user enters <password>
+	Examples:
+	|username|password|
+	|standard_user|secret_sauce|
+	
 			
 	
 

@@ -13,6 +13,8 @@ export class CreditCardPOM{
     readonly genderSelect;
     readonly nationalitySelect;
 
+    readonly dobField;
+
     constructor(page: Page) {
         this.page = page;
         this.panField = page.locator('input[title="PAN"]');
@@ -23,6 +25,8 @@ export class CreditCardPOM{
         this.nextButton = page.locator("//button[@aria-label='Button']");
         this.genderSelect = page.locator("//span[@class='']/ancestor::li/parent::ul");
         this.nationalitySelect = page.locator("//div[@class='ApolloSbiCreditCard_radioGroup__qc9aJ']");
+
+        this.dobField = page.locator("//input[@placeholder='DD-MM-YYYY']");
     }
 
     async SignInWithCredentials(page : Page,pan : string,gender : string,nationality : string,motherName : string,email : string,pincode : number,message : string)
@@ -81,5 +85,18 @@ export class CreditCardPOM{
             let errorMessage = await page.getByText(message!).textContent();
             await expect(errorMessage).toBe(message);
         }
+    }
+
+    // Function to test ui element
+    async testField(page : Page,element : any,submitValue: string){
+        await expect(element).toBeVisible();
+        await expect(element).toBeEnabled();
+        await element.fill(submitValue);
+        await expect(element).toHaveValue(submitValue);
+    }
+
+    async testElement(page: Page,element : any){
+        await expect(element).toBeVisible();
+        await expect(element).toBeEnabled();
     }
 }

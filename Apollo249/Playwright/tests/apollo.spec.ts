@@ -1,6 +1,7 @@
 import {test,expect,Page,BrowserContext} from "@playwright/test";
 import {CreditCardPOM} from "../pages/credit-card-form";
 import {fetchCreditData} from "../utils/excelDataReader";
+import { execPath } from "process";
 
 test.use({storageState:'auth.json'});
 
@@ -62,30 +63,25 @@ creditCredentials.forEach((data : CreditDataCredentials,index : number)=>{
             await pageData.SignInWithCredentials(page,data.pan,data.gender,data.nationality,data.mother_name,data.email,data.pincode,data.message);
         });
     }
-
-
 });
 
 // test case 6
 test("to validate the user is able to type in the pan card text field",async ({page})=>{
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
-
-    const panPlaceHolder = await page.locator('input[title="PAN"]');
-
-    await expect(panPlaceHolder).toBeVisible();
-    await expect(panPlaceHolder).toBeEnabled();
-    
-    await panPlaceHolder.fill("EPKPA1234");
-    await expect(panPlaceHolder).toHaveValue("EPKPA1234");
-});
+    await pageData.panField.clear();
+    await pageData.testField(page,pageData.panField,"EPKPA1234");
+})
 
 // test case 7
 test("to validate the dob field is visible",async ({page})=>{
-    await page.goto("https://www.apollo247.com/apollo-sbi-credit-card-form");
-    await page.locator('input[title="PAN"]').fill("EPKPA7238P");
+    await pageData.panField.fill("EPKPA7238P");
+    await expect(await pageData.dobField.getAttribute('value')).toBe("15/08/2003");
+});
 
-    const dobHolder = await page.getByPlaceholder('DD-MM-YYYY');
-
-    await expect(dobHolder).toBeVisible();
-    await expect(dobHolder).toHaveValue("15/08/2003");
+// test case 7
+test.only("to validate the gender drop down is present",async ({page})=>{
+    await pageData.testElement(page,pageData.genderBox);
+    await pageData.genderBox.click();
+    await pageData.testElement(page,pageData.genderSelect.locator("//span[text()='Male']//ancestor::li"));
+    await pageData.testElement(page,pageData.genderSelect.locator("//span[text()='Female']//ancestor::li"));
+    await page.waitForTimeout(2000);
 });
