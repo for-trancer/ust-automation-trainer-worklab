@@ -1,6 +1,4 @@
-import {test,Page,BrowserContext, expect} from "@playwright/test";
-
-
+import {test,Page,BrowserContext, expect, Locator} from "@playwright/test";
 
 export class CreditCardPOM{
     readonly page : Page;
@@ -95,8 +93,21 @@ export class CreditCardPOM{
         await expect(element).toHaveValue(submitValue);
     }
 
+    // Function to test element
     async testElement(page: Page,element : any){
         await expect(element).toBeVisible();
         await expect(element).toBeEnabled();
+    }
+
+    // Function to test element with value
+    async testElementValue(element: Locator,valueName: string,expectedValue : string){
+        const elementText = await element.getAttribute(valueName);
+        await expect(elementText).toBe(expectedValue);
+    }
+
+    // Function to verify page content by text
+    async verifyByText(page: Page,verifyText: string){
+        const element : Locator = await page.getByText('Select occupation type');
+        expect(element).toBeVisible(); 
     }
 }
