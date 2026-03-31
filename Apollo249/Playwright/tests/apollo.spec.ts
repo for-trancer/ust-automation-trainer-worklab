@@ -112,10 +112,9 @@ test("to validate the user is able to see and type in emaail field",async ({page
 })
 
 // test case 12
-test.only("to validate whether the user is able to see and click next button",async({page})=>{
+test("to validate whether the user is able to see and click next button",async({page})=>{
     await pageData.panField.fill("EPKPA7238P");
     await pageData.testElement(page,pageData.nextButton);
     await pageData.nextButton.click();
     await pageData.verifyByText(page,'Select occupation type');
 });
-
